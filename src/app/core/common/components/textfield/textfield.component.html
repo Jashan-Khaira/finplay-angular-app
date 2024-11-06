@@ -1,0 +1,17 @@
+<div class="flex flex-col">
+    <label class="text-text-16-700">{{label}}</label>
+
+    @if (type != 'password') {
+        <div class="flex bg-neutral-200 pl-[16px] pr-[16px] rounded-md mt-1 {{onFocused ? 'border-2 border-black' : 'border-2 border-white'}}" >
+            @if (icon != undefined) {
+                <fa-icon class="content-center" size="1x" [icon]="icon"></fa-icon>
+            }
+            <input class="bg-neutral-200 h-10 w-full focus:outline-none active:outline-none" [placeholder]="placeholder" [value]="value" (change)="onInputChanged($event)" (focus)="toggleFocus(true)" (blur)="toggleFocus(false)"/>
+        </div>
+    }@else {
+        <div class="flex bg-neutral-200 pl-[16px] pr-[16px] rounded-md mt-1 {{onFocused ? 'border-2 border-black' : 'border-2 border-white'}}" >
+            <input [type]="showPassword ? 'text' : 'password'" class="bg-neutral-200 h-10 w-full focus:outline-none active:outline-none" [placeholder]="placeholder" (change)="onInputChanged($event)" (focus)="toggleFocus(true)" (blur)="toggleFocus(false)"/>
+            <button class="outline-none" (click)="showPassword = !showPassword"><fa-icon  class="content-center" size="1x" [icon]="showPassword ? eyeIcon : eyeSlashIcon"></fa-icon></button>
+        </div>
+    }
+</div>

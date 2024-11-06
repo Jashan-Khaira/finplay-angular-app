@@ -1,0 +1,18 @@
+<div>
+    <div>
+        <app-textfield [label]="'Email'" [type]="emailType" placeholder="Enter your email" [(value)]="emailValue"></app-textfield>
+    </div>
+    
+    <div class="mt-4">
+        <app-textfield [label]="'Password'" [type]="passwordType" placeholder="Enter your password" [(value)]="passwordValue"></app-textfield>
+    </div>
+    
+    <div class="mt-0">
+        <button class="underline text-neutral text-text-12-600" (click)="forgotPassword()">Forget Password?</button>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-4">
+        <app-button label="Login" (onButtonClick)="onLogin()"></app-button>
+        <app-button label="Sign Up" (onButtonClick)="navigateToSignUp()" [buttonStyle]="outlineTypeButton"></app-button>
+    </div>
+</div>
