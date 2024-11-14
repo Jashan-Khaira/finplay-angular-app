@@ -27,7 +27,7 @@ export class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
             password: password
         };
         return new Observable<string>((observer) => {
-            this.apiService.post<string>('auth/login', requestBody).subscribe({
+            this.apiService.post<string>('login', requestBody).subscribe({
                 next: (response) => {
                     if (response == null || response == undefined) {
                         observer.error(new ServerExpection('Server response is null or undefined', 500));
