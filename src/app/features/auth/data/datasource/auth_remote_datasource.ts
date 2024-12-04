@@ -12,9 +12,6 @@ export interface AuthRemoteDataSource {
     signUpWithEmailPassword(email: string, password: string, confirmPassword: string): Observable<string>;
 }
 
-// @Injectable(
-//     {providedIn: 'root'}
-// )
 export class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     apiService: ApiService;
     constructor(apiService: ApiService) {

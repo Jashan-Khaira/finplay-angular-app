@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { InputType } from '../../../../../core/common/components/textfield/input-type.enum';
 import { ButtonStyle } from '../../../../../core/common/components/button/button-type.enum';
 import { AuthRepositoryImpl } from '../../../data/respository/auth_repository_impl';
+import { Router } from '@angular/router';
+import { ButtonState } from '../../../../../core/common/components/button/button-state.enum';
 
 @Component({
   selector: 'app-sign-in-form',
@@ -20,20 +22,30 @@ export class SignInFormComponent {
 
   authRepository = inject(AuthRepositoryImpl);
 
+  router: Router;
+
+  loginButtonState: ButtonState = ButtonState.ENABLED;
+
+  constructor(router: Router) {
+    this.router = router;
+  }
+
   onLogin(): void {
-    console.log('onLogin');
+    this.loginButtonState = ButtonState.LOADING;
     this.authRepository.signInWithEmailPassword(this.emailValue, this.passwordValue).subscribe({
       next: () => {
-        console.log('Login successful');
+        this.router.navigate(['/dashboard']);
+        this.loginButtonState = ButtonState.ENABLED;
       },
       error: (error) => {
+    this.loginButtonState = ButtonState.ENABLED;
         console.log('Login failed', error);
       }
     });
   }
 
   navigateToSignUp(): void {
-    console.log('navigateToSignUp');
+    this.router.navigate(['/auth/sign-up']);
 
   }
 

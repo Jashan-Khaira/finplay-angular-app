@@ -1,5 +1,11 @@
 <div>
-    <button type="button" class="{{style}}"  (click)="onClick()">{{label}}</button> 
+    <button type="button" class="{{style}} disabled:bg-neutral" [disabled]="buttonState != 'enabled'"  (click)="onClick()">
+        {{label}} 
+        @if (buttonState === 'loading') {
+            <fa-icon class="pl-2 content-center" size="lg" [icon]="spinnerIcon" [animation]="'spin'"></fa-icon>
+        }
+
+    </button> 
     <!-- <button type="button" *ngif="buttonStyle === 'raised'"  onclick="onClick()">{{label}}</button> 
     <button type="button" *ngif="buttonStyle === 'outlined'"  onclick="onClick()">{{label}}</button> 
     <button type="button" *ngif="buttonStyle === 'text'"  onclick="onClick()">{{label}}</button>  -->

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -14,4 +14,12 @@ export class SearchComponent {
   @Input() showResults: boolean = false;
   @Input() isLoading: boolean = false;
   
+  @Output() search: EventEmitter<string> = new EventEmitter<string>();
+
+
+  onSearch(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+
+    this.search.emit(value);
+  }
 }

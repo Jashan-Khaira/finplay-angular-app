@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthModule } from './features/auth/auth.module';
+import { AuthGaurd } from './core/gaurd/auth.gaurd';
 
 export const routes: Routes = [
     {
@@ -9,10 +9,12 @@ export const routes: Routes = [
     },
     {
         path: 'auth',
-        loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
+        loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
+        canActivate: [AuthGaurd]
     },
      {
-        path: 'dashbaord',
-        loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule)
+        path: 'dashboard',
+        loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule),
+        canActivate: [AuthGaurd]
      }
 ];

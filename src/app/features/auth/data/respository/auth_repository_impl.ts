@@ -6,6 +6,7 @@ import { ApiService } from "../../../../core/services/api.service";
 
 interface AuthRepository {
     signInWithEmailPassword(email: string, password: string): Observable<string>;
+    signUpWithEmailPassword(email: string, password: string, confirmPassword: string): Observable<string>;
 }
 
 @Injectable({

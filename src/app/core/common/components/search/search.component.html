@@ -1,7 +1,7 @@
 <div class="relative w-full">
     <div class="px-6 py-1 border-[1px] border-neutral rounded-md flex flex-row gap-6">
         <fa-icon class="content-center" size="lg" [icon]="searchIcon"></fa-icon>
-        <input class="h-10 w-full focus:outline-none active:outline-none" />
+        <input class="h-10 w-full focus:outline-none active:outline-none" (change)="onSearch($event)" />
         @if (isLoading) {
             <fa-icon class="content-center" size="lg" [icon]="spinnerIcon" [animation]="'spin'"></fa-icon>
         }

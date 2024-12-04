@@ -2,6 +2,7 @@ import {Component, inject} from '@angular/core';
 import { ButtonStyle } from '../../../../../core/common/components/button/button-type.enum';
 import { InputType } from '../../../../../core/common/components/textfield/input-type.enum';
 import {AuthRepositoryImpl} from '../../../data/respository/auth_repository_impl';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up-form',
@@ -17,12 +18,12 @@ export class SignUpFormComponent {
 
   authRepository = inject(AuthRepositoryImpl);
 
-  signUp(): void {
-    // console.log('signUp');
+constructor(private router: Router) {}
 
+  signUp(): void {
     this.authRepository.signUpWithEmailPassword(this.emailValue, this.passwordValue, this.passwordValue).subscribe({
       next: () => {
-        console.log('SignUp successful');
+        this.router.navigate(['/auth/sign-in']);
       },
       error: (error) => {
         console.log('SignUp failed', error);
@@ -31,6 +32,6 @@ export class SignUpFormComponent {
   }
 
   navigateToSignIn(): void {
-    console.log('navigateToSignIn');
+    this.router.navigate(['/auth/sign-in']);
   }
 }

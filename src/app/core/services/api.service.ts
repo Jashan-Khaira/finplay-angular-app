@@ -23,17 +23,19 @@ export class ApiService {
   }
 
   get<T>(url: string, params: Map<string, string>): Observable<T> {
-    const htppParams = new HttpParams();
+    let htppParams = new HttpParams();
 
     params.forEach((value, key) => {
-      htppParams.set(key, value);
+      htppParams = htppParams.set(key, value);
     });
+    
+
 
     return this.httpClient.get<T>(`${this.baseUrl}/${url}`, { params: htppParams });
   }
 
   post<T>(url: string, body: Request) : Observable<T> {
-    return this.httpClient.post<T>(`${this.baseUrl}/${url}` ,body, { headers: this.getHeaders()});
+    return this.httpClient.post<T>(`${this.baseUrl}/${url}` ,body);
   }
 
   put<T>(url: string, body: Request) : Observable<T> {

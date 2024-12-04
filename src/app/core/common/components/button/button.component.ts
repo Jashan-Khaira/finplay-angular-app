@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ButtonStyle } from './button-type.enum';
 import { ButtonState } from './button-state.enum';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-button',
@@ -16,6 +17,9 @@ export class ButtonComponent implements OnInit {
     @Input() buttonState: ButtonState = ButtonState.ENABLED;
     @Output() onButtonClick: EventEmitter<string> = new EventEmitter<string>();
     style = "";
+
+    spinnerIcon = faSpinner;
+
 
     ngOnInit(): void {
       // TODO : Base on the button style, set the style attribute"
