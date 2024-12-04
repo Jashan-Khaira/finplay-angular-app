@@ -1,0 +1,10 @@
+<nav class="text-sm font-medium text-center text-gray-500">
+    <ul class="flex flex-wrap -mb-px justify-center">
+        <li *ngFor="let item of tabs; index as i" class="me-2">
+            <a routerLink="{{item.route}}" routerLinkActive="active"
+                class="inline-block p-4 border-b-2 rounded-t-lg hover:text-color-4 hover:text-opacity-70 min-w-32"
+                [class.active]="item.id == activeTab" [class.border-white]="item.id != activeTab"
+                [class.border-color-4]="item.id == activeTab" (click)="tabClick(item)">{{item.label}}</a>
+        </li>
+    </ul>
+</nav>

@@ -34,6 +34,7 @@ export class SignInFormComponent {
 
   navigateToSignUp(): void {
     console.log('navigateToSignUp');
+
   }
 
   forgotPassword(): void {

@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  angular-app:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf

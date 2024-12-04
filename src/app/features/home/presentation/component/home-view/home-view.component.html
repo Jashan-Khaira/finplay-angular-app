@@ -1,0 +1,22 @@
+<div class="py-8 px-16">
+    <!-- Popular Categories -->
+    <div>
+        <p class="font-semibold select-none">Popular Categories</p>
+        
+        <div class="flex flex-row gap-6 mt-4">
+            @for (item of categoriesList; track $index) {
+                <app-categories-item-view [title]="item.title" [selected]="item.selected" (onSelectCategory)="onSelectCategory($event)"></app-categories-item-view>
+            }
+        </div>
+    </div> 
+
+    <div class="mt-16">
+        <p class="font-semibold select-none">Most Popular assets</p>
+        
+        <div class="flex flex-row gap-6 mt-4">
+            @for (item of popularAssets; track $index) {
+                <app-assets-item-view [title]="item.title" [profit]="item.profit"></app-assets-item-view>
+            }
+        </div>
+    </div> 
+</div>

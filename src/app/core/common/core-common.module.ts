@@ -4,11 +4,15 @@ import { TextfieldComponent } from "./components/textfield/textfield.component";
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fontAwesomeIcons } from "./font-awesome-icon";
 import { faR, fas } from "@fortawesome/free-solid-svg-icons";
+import { TabsComponent } from "./components/tabs/tabs.component";
+import { CommonModule } from "@angular/common";
+import { RouterModule, RouterOutlet } from "@angular/router";
+import { SearchComponent } from "./components/search/search.component";
 
 @NgModule({
-    declarations: [ButtonComponent, TextfieldComponent],
-    imports: [FontAwesomeModule],
-    exports: [ButtonComponent, TextfieldComponent],
+    declarations: [ButtonComponent, TextfieldComponent, TabsComponent, SearchComponent],
+    imports: [FontAwesomeModule, CommonModule, RouterModule],
+    exports: [ButtonComponent, TextfieldComponent, TabsComponent, SearchComponent, FontAwesomeModule],
 })
 export class CoreCommonModule implements OnInit {
     

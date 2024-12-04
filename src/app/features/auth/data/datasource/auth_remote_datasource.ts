@@ -7,7 +7,7 @@ import { ServerExpection } from '../../../../core/error/server_expection';
 export interface AuthRemoteDataSource {
     //TODO: Change it to return a User object or some other object
     signInWithEmailPassword(email: string, password: string): Observable<string>;
-    
+
     //TODO: Change it to return a User object or some other object
     signUpWithEmailPassword(email: string, password: string, confirmPassword: string): Observable<string>;
 }
@@ -27,9 +27,9 @@ export class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
             password: password
         };
         return new Observable<string>((observer) => {
-            this.apiService.post<string>('login', requestBody).subscribe({
+            this.apiService.post<string>('users/login', requestBody).subscribe({
                 next: (response) => {
-                    if (response == null || response == undefined) {
+                    if (response == null) {
                         observer.error(new ServerExpection('Server response is null or undefined', 500));
                     } else {
                         observer.next(response);
@@ -44,7 +44,27 @@ export class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     }
 
     signUpWithEmailPassword(email: string, password: string, confirmPassword: string): Observable<string> {
-        throw new Error("Method not implemented.");
+        const requestBody = {
+          email: email,
+          password: password
+        }
+
+        return new Observable<string>((observer) => {
+          this.apiService.post<string>('users/register', requestBody).subscribe({
+            next: (response) => {
+              if (response == null) {
+                observer.error(new ServerExpection('Server response is null or undefined', 500));
+              } else {
+                observer.next(response);
+                observer.complete();
+              }
+            },
+            error: (error) => {
+              observer.error(error);
+            }
+          })
+        })
+
     }
 
 }

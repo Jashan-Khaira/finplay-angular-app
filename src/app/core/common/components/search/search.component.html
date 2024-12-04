@@ -1,0 +1,15 @@
+<div class="relative w-full">
+    <div class="px-6 py-1 border-[1px] border-neutral rounded-md flex flex-row gap-6">
+        <fa-icon class="content-center" size="lg" [icon]="searchIcon"></fa-icon>
+        <input class="h-10 w-full focus:outline-none active:outline-none" />
+        @if (isLoading) {
+            <fa-icon class="content-center" size="lg" [icon]="spinnerIcon" [animation]="'spin'"></fa-icon>
+        }
+    </div>
+    @if (showResults) {
+        <div class="absolute top-[4rem] p-6 bg-white shadow-sm w-full h-[20rem] rounded-md border-neutral-200 border-[1px] z-10">
+            <ng-content></ng-content>
+        </div>
+    }
+    
+</div>

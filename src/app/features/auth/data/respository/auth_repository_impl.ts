@@ -13,7 +13,7 @@ interface AuthRepository {
 })
 export class AuthRepositoryImpl implements AuthRepository {
     remoteDataSource: AuthRemoteDataSource;
-    
+
     constructor(private readonly apiService: ApiService) {
         this.remoteDataSource = new AuthRemoteDataSourceImpl(apiService);
     }
@@ -32,4 +32,17 @@ export class AuthRepositoryImpl implements AuthRepository {
         });
     }
 
+    signUpWithEmailPassword(email: string, password: string, confirmPassword: string): Observable<string> {
+        return new Observable<string>((observer) => {
+            this.remoteDataSource.signUpWithEmailPassword(email, password, confirmPassword).subscribe({
+                next: () => {
+                    observer.next();
+                    observer.complete();
+                },
+                error: (err) => {
+                    observer.error(new Failure(err.message, err.status));
+                }
+            })
+        })
+    }
 }

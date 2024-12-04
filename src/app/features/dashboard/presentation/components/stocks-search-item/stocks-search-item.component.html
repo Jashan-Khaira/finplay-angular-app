@@ -1,0 +1,18 @@
+<div>
+    <div class="flex flex-row justify-between items-center py-2 px-4 hover:bg-success-200 hover:rounded-md cursor-pointer">
+       <div class="flex flex-row gap-4">
+            <fa-icon [icon]="stockIcon" size="sm"></fa-icon>
+            <div class="flex flex-row gap-2">
+                <span class="select-none font-bold">{{title}}</span>
+                <span class="select-none font-medium">({{symbol}})</span>
+            </div>  
+       </div>
+       <div class="flex flex-row items-center gap-3">
+        <div class="text-success-650">
+            <span class="select-none font-bold">${{price}}</span>
+            <span class="select-none font-medium ml-1">(+{{changePercent}}%)</span>
+        </div>
+
+            <button class="bg-neutral opacity-70 p-1.5 rounded-lg h-8 w-8 flex flex-row justify-center items-center"><fa-icon [icon]="arrowRight" size="sm" class="text-black"></fa-icon></button>
+       </div>
+</div>

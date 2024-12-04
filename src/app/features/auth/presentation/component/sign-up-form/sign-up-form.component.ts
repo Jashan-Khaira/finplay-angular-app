@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { ButtonStyle } from '../../../../../core/common/components/button/button-type.enum';
 import { InputType } from '../../../../../core/common/components/textfield/input-type.enum';
+import {AuthRepositoryImpl} from '../../../data/respository/auth_repository_impl';
 
 @Component({
   selector: 'app-sign-up-form',
@@ -14,8 +15,19 @@ export class SignUpFormComponent {
   emailValue: string = '';
   passwordValue: string = '';
 
+  authRepository = inject(AuthRepositoryImpl);
+
   signUp(): void {
-    console.log('signUp');
+    // console.log('signUp');
+
+    this.authRepository.signUpWithEmailPassword(this.emailValue, this.passwordValue, this.passwordValue).subscribe({
+      next: () => {
+        console.log('SignUp successful');
+      },
+      error: (error) => {
+        console.log('SignUp failed', error);
+      }
+    })
   }
 
   navigateToSignIn(): void {

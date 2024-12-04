@@ -1,0 +1,20 @@
+<div class="px-6 overflow-auto h-[35rem]">
+  <table class="w-full table-fixed select-none relative border-separate border-spacing-0">
+    <thead  class="select-none sticky top-0 bg-white  z-[999]">
+      <tr class="select-none">
+        @for (items of columnData; track $index) {
+          <th class="bg-neutral-200  text-left p-3 sticky top-0  z-[999] select-none  {{items.class}}" scope="col"  [id]="items.prop" [colSpan]="items.colSpan">{{items.name}}</th>
+        }
+      </tr>
+    </thead>
+    <tbody class="select-none">
+      @for (row of data; track $index) {
+        <tr class="select-none">
+          @for (col of columnData; track $index) {
+            <td class="text-left p-3 select-none text-text-16-400 {{col.class}} bg-white" [id]="col.prop" [colSpan]="col.colSpan">{{row[col.prop]}}</td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

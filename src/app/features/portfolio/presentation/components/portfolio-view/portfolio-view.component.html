@@ -1,0 +1,9 @@
+<div class="py-6 bg-white">
+  <app-portfolio-table [columnData]="columData" [data]="data"></app-portfolio-table>
+</div>
+
+<div class="mt-8 flex flex-row justify-evenly items-center">
+  <app-portfolio-meta-data-view [title]="'Total Investment'" [value]="'55,320.10'" [valueColor]="'text-black'"></app-portfolio-meta-data-view>
+  <app-portfolio-meta-data-view [title]="'Current Value'" [value]="'59,016.74'" [valueColor]="'text-black'"></app-portfolio-meta-data-view>
+  <app-portfolio-meta-data-view [title]="'Total p&L'" [value]="'3,696.64'" [valueColor]="'text-success-600'" [metaData]="'(+6.62%)'" [metaDataColor]="'text-success-600'"></app-portfolio-meta-data-view>
+</div>

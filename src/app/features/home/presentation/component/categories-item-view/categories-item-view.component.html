@@ -1,0 +1,6 @@
+<div class="relative px-2 py-1.5 border-[1.5px] rounded-md min-w-[5rem] text-center {{selected ? selectClass : unSelectedClass}} cursor-pointer" (click)="onSelectingCategory()">
+    <p class="text-text-14-600 select-none">{{title}}</p>
+    @if (selected) {
+        <fa-icon size="xs" [icon]="crossIcon" class="absolute top-[-12px] right-[-4px] text-danger-500"></fa-icon>
+    }
+</div>

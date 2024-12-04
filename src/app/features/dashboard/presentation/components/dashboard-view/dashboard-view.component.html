@@ -1,0 +1,15 @@
+<div class="bg-white p-4">
+
+    <app-tabs [tabs]="tabs" [activeTab]="activeTab" (onTabClick)="onTabClick($event)"></app-tabs>
+
+  @if (activeTab != 'market_trade') {
+    <div class="mt-4 flex flex-row justify-center">
+      <app-search class="w-[70%]" [showResults]="false" [isLoading]="isSearchLoading">
+        <app-stocks-search-item [isProfit]="true" [title]="'Amazon Inc'" [symbol]="'AMZN'" [price]="501" [changePercent]="1.2"></app-stocks-search-item>
+      </app-search>
+    </div>
+  }
+
+
+    <router-outlet />
+</div>
