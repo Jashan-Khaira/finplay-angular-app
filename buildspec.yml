@@ -8,54 +8,34 @@ phases:
       - echo "Starting install phase..."
       - npm install -g @angular/cli
       - echo "Install phase completed"
-
+  
   pre_build:
     commands:
       - echo "Starting pre-build phase..."
-      - echo "Current working directory:"
-      - pwd
-      - ls -la
-      - echo "Logging in to Amazon ECR..."
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REPOSITORY_URI
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
-      - echo "Pre-build phase completed with IMAGE_TAG: $IMAGE_TAG"
   
   build:
     commands:
-      - echo "Starting build phase on $(date)"
+      - echo "Build started on $(date)"
       - echo "Building the Docker image..."
-      - echo "Contents of current directory:"
-      - ls -la
-      - echo "Checking if Dockerfile exists:"
-      - cat Dockerfile
       - docker build -t $ECR_REPOSITORY_URI:latest .
       - docker tag $ECR_REPOSITORY_URI:latest $ECR_REPOSITORY_URI:$IMAGE_TAG
-      - echo "Docker images after build:"
-      - docker images
-      - echo "Build phase completed"
   
   post_build:
     commands:
-      - echo "Starting post-build phase on $(date)"
+      - echo "Build completed on $(date)"
       - echo "Pushing the Docker image..."
-      - docker push $ECR_REPOSITORY_URI:latest || echo "Error pushing latest tag"
-      - docker push $ECR_REPOSITORY_URI:$IMAGE_TAG || echo "Error pushing version tag"
-      - echo "Docker push completed"
+      - docker push $ECR_REPOSITORY_URI:latest
+      - docker push $ECR_REPOSITORY_URI:$IMAGE_TAG
       - echo "Writing image definitions file..."
       - printf '{"ImageURI":"%s"}' $ECR_REPOSITORY_URI:latest > imageDefinitions.json
-      - echo "Contents of imageDefinitions.json:"
-      - cat imageDefinitions.json
-      - echo "Post-build phase completed"
 
 artifacts:
   files:
     - imageDefinitions.json
-    - appspec.yaml
-    - taskdef.json
-  name: BuildArtifact
 
 cache:
   paths:
     - '/root/.npm/**/*'
-    - 'node_modules/**/*'
