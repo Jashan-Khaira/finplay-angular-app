@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Portfolio } from '../../../model/portfolio.model';
+import { PortfolioRepositoryImpl } from '../../../data/repository/portfolio_repository_impl';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-portfolio-view',
   templateUrl: './portfolio-view.component.html',
   styleUrl: './portfolio-view.component.scss'
 })
-export class PortfolioViewComponent {
-
+export class PortfolioViewComponent implements OnInit {
   columData : {
     name: string,
     prop: string,
@@ -57,115 +59,34 @@ export class PortfolioViewComponent {
     }
   ]
 
-  data : any[] = [
-    {
-      stockName: "BSE",
-      quantity: 1,
-      avgCost: 552.50,
-      currentValue: 567.10,
-      pnl: 14.60,
-      netChange: 2.64,
-      dayChange: -0.30,
-    },
-    {
-      stockName: "BSE",
-      quantity: 1,
-      avgCost: 552.50,
-      currentValue: 567.10,
-      pnl: 14.60,
-      netChange: 2.64,
-      dayChange: -0.30,
-    },
-    {
-      stockName: "BSE",
-      quantity: 1,
-      avgCost: 552.50,
-      currentValue: 567.10,
-      pnl: 14.60,
-      netChange: 2.64,
-      dayChange: -0.30,
-    },
-    {
-      stockName: "BSE",
-      quantity: 1,
-      avgCost: 552.50,
-      currentValue: 567.10,
-      pnl: 14.60,
-      netChange: 2.64,
-      dayChange: -0.30,
-    },
-    {
-      stockName: "BSE",
-      quantity: 1,
-      avgCost: 552.50,
-      currentValue: 567.10,
-      pnl: 14.60,
-      netChange: 2.64,
-      dayChange: -0.30,
-    },
-    {
-      stockName: "BSE",
-      quantity: 1,
-      avgCost: 552.50,
-      currentValue: 567.10,
-      pnl: 14.60,
-      netChange: 2.64,
-      dayChange: -0.30,
-    },
-    {
-      stockName: "BSE",
-      quantity: 1,
-      avgCost: 552.50,
-      currentValue: 567.10,
-      pnl: 14.60,
-      netChange: 2.64,
-      dayChange: -0.30,
-    },
-    {
-      stockName: "BSE",
-      quantity: 1,
-      avgCost: 552.50,
-      currentValue: 567.10,
-      pnl: 14.60,
-      netChange: 2.64,
-      dayChange: -0.30,
-    },
-    {
-      stockName: "BSE",
-      quantity: 1,
-      avgCost: 552.50,
-      currentValue: 567.10,
-      pnl: 14.60,
-      netChange: 2.64,
-      dayChange: -0.30,
-    },
-    {
-      stockName: "BSE",
-      quantity: 1,
-      avgCost: 552.50,
-      currentValue: 567.10,
-      pnl: 14.60,
-      netChange: 2.64,
-      dayChange: -0.30,
-    },
-    {
-      stockName: "BSE",
-      quantity: 1,
-      avgCost: 552.50,
-      currentValue: 567.10,
-      pnl: 14.60,
-      netChange: 2.64,
-      dayChange: -0.30,
-    },
-    {
-      stockName: "BSE",
-      quantity: 1,
-      avgCost: 552.50,
-      currentValue: 567.10,
-      pnl: 14.60,
-      netChange: 2.64,
-      dayChange: -0.30,
-    }
-  ]
+  portfolio : Portfolio | undefined = undefined;
+  
+  isLoading = false;
 
+  portfolioRepository = inject(PortfolioRepositoryImpl);
+
+  constructor(private _router: Router) { }
+
+  ngOnInit(): void {
+    const id = localStorage.getItem('userId');
+
+    if (!id) {
+      // throw new Error('User id not found');
+      localStorage.clear();
+      this._router.navigate(['auth/login']);
+    }else {
+      this.isLoading = true;
+
+      this.portfolioRepository.getPortfolio(id).subscribe({
+          next: (portfolio) => {
+            this.portfolio = portfolio;
+            this.isLoading = false;
+          },
+          error: (err) => {
+            console.log(err);
+          },
+      })
+    }
+  
+  }
 }

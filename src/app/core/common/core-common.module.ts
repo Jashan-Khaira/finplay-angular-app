@@ -8,6 +8,7 @@ import { TabsComponent } from "./components/tabs/tabs.component";
 import { CommonModule } from "@angular/common";
 import { RouterModule, RouterOutlet } from "@angular/router";
 import { SearchComponent } from "./components/search/search.component";
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
     declarations: [ButtonComponent, TextfieldComponent, TabsComponent, SearchComponent],

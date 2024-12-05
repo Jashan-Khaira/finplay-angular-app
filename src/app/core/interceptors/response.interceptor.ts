@@ -16,6 +16,10 @@ export const ResponseInterceptor: HttpInterceptorFn = (req, next) => {
                     if(body && body['accessToken']) {
                         jwtService.saveToken(body['accessToken']);
                     }
+
+                    if(body && body['id']) {
+                        localStorage.setItem('userId', body['id']);
+                    }
                 }
             })
         );

@@ -22,19 +22,22 @@ export class ApiService {
     return headers;
   }
 
-  get<T>(url: string, params: Map<string, string>): Observable<T> {
+  get<T>(url: string, params?: Map<string, string>): Observable<T> {
     let htppParams = new HttpParams();
 
-    params.forEach((value, key) => {
-      htppParams = htppParams.set(key, value);
-    });
+    if(params) {
+      params.forEach((value, key) => {
+        htppParams = htppParams.set(key, value);
+      });
+    }
+
     
 
 
     return this.httpClient.get<T>(`${this.baseUrl}/${url}`, { params: htppParams });
   }
 
-  post<T>(url: string, body: Request) : Observable<T> {
+  post<T>(url: string, body?: Request) : Observable<T> {
     return this.httpClient.post<T>(`${this.baseUrl}/${url}` ,body);
   }
 

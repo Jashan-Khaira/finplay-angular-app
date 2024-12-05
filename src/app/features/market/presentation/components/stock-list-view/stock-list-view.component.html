@@ -1,0 +1,19 @@
+<div>
+    <app-search [placeholder]="'Search for the Stocks'" class="w-full" [showResults]="false" [isLoading]="false"
+        (search)="onSearch($event)"></app-search>
+    <div class="mt-6 h-[45rem] overflow-auto p-2">
+        @for (item of marketStocks; track $index) {
+        <div class="cursor-pointer flex flex-row w-full justify-between p-4 bg-neutral-200 mt-2 rounded-md" (click)="onSelectedStock(item)">
+            <span>{{item.name}} ({{item.symbol}})</span>
+            <div class="flex flex-row gap-2">
+                <div class="flex flex-row gap-2"><span>{{item.dayChangePercent}}%</span> <fa-icon
+                        [icon]="item.dayChangePercent >= 0 ? cheveronUp : cheveronDown"
+                        class="{{item.dayChangePercent >= 0 ? 'text-success-650' : 'text-danger-650'}}"></fa-icon>
+                </div>
+                <span
+                    class="{{item.dayChangePercent >= 0 ? 'text-success-650' : 'text-danger-650'}}">{{item.close}}</span>
+            </div>
+        </div>
+        }
+    </div>
+</div>  
