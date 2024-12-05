@@ -12,25 +12,39 @@ phases:
   pre_build:
     commands:
       - echo "Starting pre-build phase..."
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REPOSITORY_URI
+      - echo "Configuring AWS CLI..."
+      - aws --version
+      - region="us-east-1"
+      - account_id="061039764011"
+      - repository_name="finplay-angular-app"
+      - registry_url="$account_id.dkr.ecr.$region.amazonaws.com"
+      - repository_uri="$registry_url/$repository_name"
+      - echo "Logging in to Amazon ECR..."
+      - aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $registry_url
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - echo "Pre-build configuration completed"
+      - echo "Repository URI: $repository_uri"
+      - echo "Image tag: $IMAGE_TAG"
   
   build:
     commands:
       - echo "Build started on $(date)"
       - echo "Building the Docker image..."
-      - docker build -t $ECR_REPOSITORY_URI:latest .
-      - docker tag $ECR_REPOSITORY_URI:latest $ECR_REPOSITORY_URI:$IMAGE_TAG
+      - echo "Current directory contents:"
+      - ls -la
+      - docker build -t $repository_uri:$IMAGE_TAG .
+      - docker tag $repository_uri:$IMAGE_TAG $repository_uri:latest
   
   post_build:
     commands:
       - echo "Build completed on $(date)"
-      - echo "Pushing the Docker image..."
-      - docker push $ECR_REPOSITORY_URI:latest
-      - docker push $ECR_REPOSITORY_URI:$IMAGE_TAG
+      - echo "Pushing the Docker images..."
+      - docker push $repository_uri:latest
+      - docker push $repository_uri:$IMAGE_TAG
       - echo "Writing image definitions file..."
-      - printf '{"ImageURI":"%s"}' $ECR_REPOSITORY_URI:latest > imageDefinitions.json
+      - printf '{"ImageURI":"%s"}' $repository_uri:latest > imageDefinitions.json
+      - echo "Post-build phase completed"
 
 artifacts:
   files:
