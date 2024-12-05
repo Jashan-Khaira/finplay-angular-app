@@ -1,0 +1,49 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo "Starting install phase..."
+      - npm install -g @angular/cli
+      - echo "Install phase completed"
+  
+  pre_build:
+    commands:
+      - echo "Starting pre-build phase..."
+      - aws --version
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 061039764011.dkr.ecr.us-east-1.amazonaws.com
+      - repository_uri=061039764011.dkr.ecr.us-east-1.amazonaws.com/finplay-angular-app
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - echo "Pre-build configuration completed"
+      - echo "Repository URI - $repository_uri"
+      - echo "Image tag - $IMAGE_TAG"
+  
+  build:
+    commands:
+      - echo "Build started on $(date)"
+      - echo "Building the Docker image..."
+      - echo "Current directory contents:"
+      - ls -la
+      - docker build -t $repository_uri:$IMAGE_TAG .
+      - docker tag $repository_uri:$IMAGE_TAG $repository_uri:latest
+  
+  post_build:
+    commands:
+      - echo "Build completed on $(date)"
+      - echo "Pushing the Docker images..."
+      - docker push $repository_uri:latest
+      - docker push $repository_uri:$IMAGE_TAG
+      - echo "Writing image definitions file..."
+      - printf '{"ImageURI":"%s"}' $repository_uri:latest > imageDefinitions.json
+      - echo "Post-build phase completed"
+
+artifacts:
+  files:
+    - imageDefinitions.json
+
+cache:
+  paths:
+    - '/root/.npm/**/*'
