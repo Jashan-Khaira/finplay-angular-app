@@ -12,20 +12,14 @@ phases:
   pre_build:
     commands:
       - echo "Starting pre-build phase..."
-      - echo "Configuring AWS CLI..."
       - aws --version
-      - region="us-east-1"
-      - account_id="061039764011"
-      - repository_name="finplay-angular-app"
-      - registry_url="$account_id.dkr.ecr.$region.amazonaws.com"
-      - repository_uri="$registry_url/$repository_name"
-      - echo "Logging in to Amazon ECR..."
-      - aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $registry_url
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 061039764011.dkr.ecr.us-east-1.amazonaws.com
+      - repository_uri=061039764011.dkr.ecr.us-east-1.amazonaws.com/finplay-angular-app
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
       - echo "Pre-build configuration completed"
-      - echo "Repository URI: $repository_uri"
-      - echo "Image tag: $IMAGE_TAG"
+      - echo "Repository URI - $repository_uri"
+      - echo "Image tag - $IMAGE_TAG"
   
   build:
     commands:
