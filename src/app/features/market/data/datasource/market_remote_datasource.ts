@@ -18,7 +18,7 @@ export class MarketRemoteDataSourceImpl implements MarketRemoteDataSource {
 
     buyStock(userId: string, symbol: string, quantity: number, price: number): Observable<string> {
         return new Observable<string>((observer) => {
-            const url = `market/trade/buy?userId=${1}&stockSymbol=${"AAPL"}&quantity=${1}&price=${242.65}`;
+            const url = `market/trade/buy?userId=${3}&stockSymbol=${"AAPL"}&quantity=${1000}&price=${242.65*1000}`;
             this._apiService.post<string>(url).subscribe({
                 next: (response) => {
                     if (response == null) {

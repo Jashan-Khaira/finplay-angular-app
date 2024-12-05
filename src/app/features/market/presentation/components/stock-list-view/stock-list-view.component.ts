@@ -24,7 +24,7 @@ export class StockListViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.marketRepoImpl.searchStocks("").subscribe({
+    this.marketRepoImpl.searchStocks("AAPL").subscribe({
       next: (stocks) => {
         this.marketStocks = stocks;
         this.isLoading = false;

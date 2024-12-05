@@ -26,7 +26,7 @@ COPY --from=build /usr/src/app/dist/finpaly-frontend/browser/* /usr/share/nginx/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
  
 # Expose port 4200
-EXPOSE 4200
+EXPOSE 80
  
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
