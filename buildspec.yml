@@ -7,13 +7,16 @@ phases:
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REPOSITORY_URI
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - echo Pre-build phase completed
   
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
+      - ls -la
       - docker build -t $ECR_REPOSITORY_URI:latest .
       - docker tag $ECR_REPOSITORY_URI:latest $ECR_REPOSITORY_URI:$IMAGE_TAG
+      - echo Build phase completed
   
   post_build:
     commands:
@@ -21,9 +24,14 @@ phases:
       - echo Pushing the Docker image...
       - docker push $ECR_REPOSITORY_URI:latest
       - docker push $ECR_REPOSITORY_URI:$IMAGE_TAG
+      - echo Post-build phase completed
       - echo Writing image definitions file...
       - printf '{"ImageURI":"%s"}' $ECR_REPOSITORY_URI:latest > imageDefinitions.json
 
 artifacts:
   files:
     - imageDefinitions.json
+
+cache:
+  paths:
+    - '/root/.npm/**/*'
