@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'http://finplay-main-alb-1940555113.us-east-1.elb.amazonaws.com/api/spring/finplay/api'
+    apiUrl: 'http://localhost:8001/finplay/api'
 }

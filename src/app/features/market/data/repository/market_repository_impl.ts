@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { MarketStockDetailsModel } from "../model/market-stock-details.model";
+import { MarketStockDetailsModel } from '../model/market-stock-details.model';
 import { MarketStocks } from "../model/market-stocks.model";
 import { Injectable } from "@angular/core";
 import { MarketRemoteDataSource, MarketRemoteDataSourceImpl } from "../datasource/market_remote_datasource";
@@ -8,7 +8,7 @@ import { ApiService } from "../../../../core/services/api.service";
 interface MarketRepository {
     searchStocks(searchTerm: string): Observable<MarketStocks[]>;
     searchStocksBySymbol(symbol: string): Observable<MarketStockDetailsModel>;
-    buyStock(userId: string, symbol: string, quantity: number, price: number) : Observable<string>;
+    buyStock(symbol: string, quantity: number, price: number) : Observable<string>;
 }
 
 @Injectable({
@@ -47,7 +47,8 @@ export class MarketRepositoryImpl implements MarketRepository {
             });
         });
     }
-    buyStock(userId: string, symbol: string, quantity: number, price: number): Observable<string> {
+    buyStock(symbol: string, quantity: number, price: number): Observable<string> {
+        const userId = localStorage.getItem("userId") || "";
         return new Observable<string>((observer) => {
             this._remoteDataSource.buyStock(userId, symbol, quantity, price).subscribe({
                 next: (_) => {

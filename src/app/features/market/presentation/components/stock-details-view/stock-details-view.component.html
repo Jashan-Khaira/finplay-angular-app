@@ -1,40 +1,75 @@
-<div>
-    <!-- Stock Name -->
-    <span class="text-text-18-600"></span>
+@if(isLoading == true){
+    <div class="space-y-8 animate-pulse w-full h-full">
+        <div class="h-10 bg-neutral-200 rounded-md w-48 mt-8"></div>
 
-    <div>
-        <!-- Stock Price -->
-        <span></span>
-        <!-- Stock Price Change Percent and Change value -->
-        <span></span>
+        <div class="h-60 bg-neutral-200 rounded-md w-full mt-8" ></div>
 
-        <!-- Graph -->
-        <!-- <ngx-charts-line-chart></ngx-charts-line-chart> -->
-        
+        <div class="h-20 bg-neutral-200 rounded-md w-full mt-8"></div>
+
+        <div class="h-[40%] bg-neutral-200 rounded-md w-full mt-8"></div>
     </div>
-
-    <div>
-        <span>About Company</span>
-        <span>Description</span>
-    </div>
-
-    <div>
-        <div>
-            <span>Previous Close</span>
-            <span></span>
+}@else if (isLoading == false && showStockDetails == false) {
+    <div class="w-full h-full content-center text-center flex flex-col justify-center items-center">
+        <div class="w-fit relative flex flex-col justify-center items-center">
+            <div class="h-12 bg-neutral-200 rounded-md w-[20rem] mt-8"></div>
+            <fa-icon [icon]="iconHand" [size]="'2x'" [animation]="'bounce'" class="text-neutral right-0 bottom-[-38px] absolute"></fa-icon>
         </div>
-        <div>
-            <span>AVG Volumne</span>
-            <span></span>
-        </div>
+        <div class="mt-4">
+            <span class="text-text-20-600 text-neutral-600">Please select a stock</span>
+        </div> 
     </div>
-
-    <div>
-        <div class="w-48">
-        <app-button [label]="'Buy'" (onButtonClick)="buyMarketStock()"></app-button>
+}@else {
+    <div class="mt-4 h-[85%] overflow-y-auto">
+        <span class="text-text-20-600">{{marketStockDetails?.name}}</span>
+    
+        <div class="relative w-full items-center flex flex-col mt-6">
+            <span class="text-text-20-600 absolute top-[-8px]">$<span class="font-semibold text-[32px]">{{stock?.close}}</span></span>
+    
+            <ngx-charts-line-chart 
+                [results]="dataLC"
+                [view]="viewLc"
+                [animations]="true"
+                [showGridLines]="false"
+                [legend]="true"
+                [legendTitle]=" stock!.symbol +  'Stats'"
+                [roundDomains]="true"
+                [xAxis]="true"
+                [yAxis]="true"
+                [autoScale]="true"
+                [timeline]="true"
+            ></ngx-charts-line-chart>
+            
+        </div>
+    
+        <div class="mt-8 flex flex-col gap-4">
+            <span class="text-text-18-600">About Company</span>
+            <span class="text-text-16-400 line-clamp-4">{{marketStockDetails?.description}}</span>
+        </div>
+    
+        <div class="mt-8 flex flex-row gap-8 w-full">
+            <div class="flex flex-col gap-2 rounded-md bg-neutral-200 py-4 text-center w-[14rem]">
+                <span class="text-text-16-400 text-neutral-600">Previous Close</span>
+                <span class="text-text-18-500 text-neutral-600">${{previousClose}}</span>
             </div>
-        <div>
-
+            <div class="flex flex-col gap-2 rounded-md bg-neutral-200 py-4 text-center w-[14rem]">
+                <span class="text-text-16-400 text-neutral-600">AVG Volumne</span>
+                <span class="text-text-18-500 text-neutral-600">${{averageVolume | numberFormatter}}</span>
+            </div>
         </div>
-    </div> 
-</div>
+    
+        <div class="flex mt-8 items-end gap-8 justify-around">
+            <div class="w-[30rem] h-full">
+                <app-button [label]="'Buy'" (onButtonClick)="buyMarketStock()"></app-button>
+            </div>
+            <div>
+                <app-textfield [label]="'Limit price'" [type]="inputNumberType" [(value)]="stockPrice"></app-textfield>
+    
+                <app-textfield [label]="'Number of shares'" [type]="inputNumberType" [(value)]="stockQuantity"></app-textfield>
+            </div>
+            <div class="h-full border flex flex-col items-center p-6 rounded-md border-neutral">
+                <span class="text-text-18-600">Total</span>
+                <span class="text-[2rem] text-neutral-600"> $<span>{{(stockPrice * stockQuantity) | numberFormatter}}</span></span>
+            </div>
+        </div> 
+    </div>
+}

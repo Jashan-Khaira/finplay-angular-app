@@ -62,21 +62,27 @@ export class DashboardViewComponent implements  OnInit {
   }
 
   onSearch(value: string) {
-    // console.log('Search value: ', value);
-    this.isSearchLoading = true;
-    this.dashboardResponsitory.searchStocks(value).pipe(
-      debounceTime(300),      
-    ).subscribe({
-      next: (data: SearchStock[]) => {
-        console.log('Search result: ', data);
-        this.stockList = data;
-        this.showResults = true;
-        this.isSearchLoading = false;
-      },
-      error: (err) => {
-        this.showResults = false;
-        this.isSearchLoading = false;
-      }
-    });
+    if(value.length >= 3) {
+      this.isSearchLoading = true;
+      this.dashboardResponsitory.searchStocks(value).pipe(
+        debounceTime(300),      
+      ).subscribe({
+        next: (data: SearchStock[]) => {
+          console.log('Search result: ', data);
+          this.stockList = data;
+          this.showResults = true;
+          this.isSearchLoading = false;
+        },
+        error: (err) => {
+          this.showResults = false;
+          this.isSearchLoading = false;
+        }
+      });
+    }else if(value.length > 0 && value.length < 3) {
+      this.showResults = false;
+    }else {
+      this.showResults = false;
+      this.stockList = [];
+    }
   }
 }

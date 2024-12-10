@@ -1,10 +1,11 @@
-export type MarketStockDetailsModel = {
+export type  MarketStockDetailsModel = {
     stockId: string;
     symbol: string;
     name: string;
     sector: string;
     description: string;
     meta_data_list : {
+        date: string;
         open: number;
         high: number;
         low: number;

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
-import { faChevronCircleDown, faChevronCircleUp } from '@fortawesome/free-solid-svg-icons';
+import { faChevronCircleDown, faChevronCircleUp, faCircleInfo, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { MarketStocks } from '../../../data/model/market-stocks.model';
 import { MarketRepositoryImpl } from '../../../data/repository/market_repository_impl';
 import { debounce, debounceTime } from 'rxjs';
@@ -13,6 +13,8 @@ export class StockListViewComponent implements OnInit {
 
   cheveronUp = faChevronCircleUp;
   cheveronDown = faChevronCircleDown;
+  iconInfo =  faCircleInfo;
+  iconSpinner = faSpinner;
 
   marketStocks: MarketStocks[] = [];
 
@@ -24,7 +26,7 @@ export class StockListViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.marketRepoImpl.searchStocks("AAPL").subscribe({
+    this.marketRepoImpl.searchStocks("").subscribe({
       next: (stocks) => {
         this.marketStocks = stocks;
         this.isLoading = false;
@@ -51,6 +53,8 @@ export class StockListViewComponent implements OnInit {
         }
       });
   }
+
+  // onSearch2(value : string) {}
 
   onSelectedStock(stock: MarketStocks) {
     this.onStockSelected.emit(stock);

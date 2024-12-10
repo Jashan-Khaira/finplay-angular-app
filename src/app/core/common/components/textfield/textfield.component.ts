@@ -11,7 +11,7 @@ export class TextfieldComponent {
   @Input() type: InputType = InputType.TEXT;
   @Input() placeholder: string = '';
   @Input() label: string = '';
-  @Input() value: string = '';
+  @Input() value: string | number = '';
   @Input() disabled: boolean = false;
   @Input() icon : IconDefinition | undefined
 
@@ -20,7 +20,7 @@ export class TextfieldComponent {
   eyeSlashIcon = faEyeSlash
   eyeIcon = faEye
 
-  @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() valueChange: EventEmitter<string | number> = new EventEmitter<string | number>();
 
   toggleFocus(state: boolean) {
     console.log('toggleFocus', state);

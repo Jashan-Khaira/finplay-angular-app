@@ -9,11 +9,12 @@ import { CommonModule } from "@angular/common";
 import { RouterModule, RouterOutlet } from "@angular/router";
 import { SearchComponent } from "./components/search/search.component";
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NumberFormatterPipe } from "./pipes/numberFormatter.pipe";
 
 @NgModule({
-    declarations: [ButtonComponent, TextfieldComponent, TabsComponent, SearchComponent],
+    declarations: [ButtonComponent, TextfieldComponent, TabsComponent, SearchComponent, NumberFormatterPipe],
     imports: [FontAwesomeModule, CommonModule, RouterModule],
-    exports: [ButtonComponent, TextfieldComponent, TabsComponent, SearchComponent, FontAwesomeModule],
+    exports: [ButtonComponent, TextfieldComponent, TabsComponent, SearchComponent, FontAwesomeModule, NumberFormatterPipe],
 })
 export class CoreCommonModule implements OnInit {
     

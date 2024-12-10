@@ -9,6 +9,7 @@ module.exports = {
       white: "#FFFFFF",
       neutral: "#9095a1",
       "neutral-200": "#f3f4f6",
+      "neutral-600": "#565d6d",
       black: "#000000",
         primary: {
           100: "#f2f2fd",

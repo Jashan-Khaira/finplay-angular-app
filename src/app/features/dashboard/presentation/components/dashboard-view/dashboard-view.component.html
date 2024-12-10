@@ -3,12 +3,14 @@
     <app-tabs [tabs]="tabs" [activeTab]="activeTab" (onTabClick)="onTabClick($event)"></app-tabs>
 
   @if (activeTab != 'market_trade') {
-    <div class="mt-4 flex flex-row justify-center overflow-auto">
+    <div class="mt-4 flex flex-row justify-center">
       <app-search class="w-[70%]" [showResults]="showResults" [isLoading]="isSearchLoading" (search)="onSearch($event)">
-        @for (item of stockList; track $index) {
-          <app-stocks-search-item [isProfit]="item.dayChangePercent >= 0" [title]="item.name" [symbol]="item.symbol" 
-            [price]="item.close" [changePercent]="item.dayChangePercent"></app-stocks-search-item>
-        }
+        <div>
+          @for (item of stockList; track $index) {
+            <app-stocks-search-item [isProfit]="item.dayChangePercent >= 0" [title]="item.name" [symbol]="item.symbol" 
+              [price]="item.close" [changePercent]="item.dayChangePercent"></app-stocks-search-item>
+          }
+        </div>
       </app-search>
     </div>
   }

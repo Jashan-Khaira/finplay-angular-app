@@ -1,19 +1,32 @@
 <div>
     <app-search [placeholder]="'Search for the Stocks'" class="w-full" [showResults]="false" [isLoading]="false"
         (search)="onSearch($event)"></app-search>
-    <div class="mt-6 h-[45rem] overflow-auto p-2">
-        @for (item of marketStocks; track $index) {
-        <div class="cursor-pointer flex flex-row w-full justify-between p-4 bg-neutral-200 mt-2 rounded-md" (click)="onSelectedStock(item)">
-            <span>{{item.name}} ({{item.symbol}})</span>
-            <div class="flex flex-row gap-2">
-                <div class="flex flex-row gap-2"><span>{{item.dayChangePercent}}%</span> <fa-icon
-                        [icon]="item.dayChangePercent >= 0 ? cheveronUp : cheveronDown"
-                        class="{{item.dayChangePercent >= 0 ? 'text-success-650' : 'text-danger-650'}}"></fa-icon>
+    @if (!isLoading && marketStocks.length > 0) {
+        <div class="mt-6 h-[45rem] overflow-auto p-2">
+            @for (item of marketStocks; track $index) {
+            <div class="cursor-pointer flex flex-row w-full justify-between p-4 bg-neutral-200 mt-2 rounded-md hover:bg-primary-100"  (click)="onSelectedStock(item)">
+                <span>{{item.name}} ({{item.symbol}})</span>
+                <div class="flex flex-row gap-2">
+                    <div class="flex flex-row gap-2"><span>{{item.dayChangePercent}}%</span> <fa-icon
+                            [icon]="item.dayChangePercent >= 0 ? cheveronUp : cheveronDown"
+                            class="{{item.dayChangePercent >= 0 ? 'text-success-650' : 'text-danger-650'}}"></fa-icon>
+                    </div>
+                    <span
+                        class="{{item.dayChangePercent >= 0 ? 'text-success-650' : 'text-danger-650'}}">{{item.close}}</span>
                 </div>
-                <span
-                    class="{{item.dayChangePercent >= 0 ? 'text-success-650' : 'text-danger-650'}}">{{item.close}}</span>
             </div>
+            }
         </div>
-        }
-    </div>
+    }@else if (!isLoading && marketStocks.length === 0) {
+        <div class="flex flex-col items-center justify-center h-[45rem]">
+            <fa-icon [icon]="iconInfo" class="text-neutral-600 text-6xl"></fa-icon>
+            <span class="text-neutral-600 text-2xl mt-2">No Stocks Found</span>
+        </div>
+    }@else {
+        <div class="flex flex-col items-center justify-center h-[45rem]">
+            <fa-icon [icon]="iconSpinner" [animation]="'spin'" class="text-neutral-600 text-6xl"></fa-icon>
+            <span class="text-neutral-600 text-2xl mt-2">Loading...</span>
+        </div>
+
+    }
 </div>  

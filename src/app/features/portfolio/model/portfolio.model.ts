@@ -4,8 +4,8 @@ import { User } from "./user.model";
 export type Portfolio = {
     id: string;
     user: User;
-    totalInvestment: string;
-    currentValue: string;
-    totalPL: string;
+    totalInvestment: number;
+    currentValue: number;
+    totalPL: number;
     stocks: Stock[];
 }

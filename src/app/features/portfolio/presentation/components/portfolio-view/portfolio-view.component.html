@@ -8,9 +8,9 @@
   </div>
   
   <div class="mt-8 flex flex-row justify-evenly items-center">
-    <app-portfolio-meta-data-view [title]="'Total Investment'" [value]="portfolio.totalInvestment" [valueColor]="'text-black'"></app-portfolio-meta-data-view>
-    <app-portfolio-meta-data-view [title]="'Current Value'" [value]="portfolio.currentValue" [valueColor]="'text-black'"></app-portfolio-meta-data-view>
-    <app-portfolio-meta-data-view [title]="'Total P&L'" [value]="portfolio.totalPL" [valueColor]="'text-success-600'"></app-portfolio-meta-data-view>
+    <app-portfolio-meta-data-view [title]="'Total Investment'" [value]="'$' + (portfolio.totalInvestment| numberFormatter)" [valueColor]="'text-black'"></app-portfolio-meta-data-view>
+    <app-portfolio-meta-data-view [title]="'Current Value'" [value]="'$' + (portfolio.currentValue | numberFormatter)" [valueColor]="'text-black'"></app-portfolio-meta-data-view>
+    <app-portfolio-meta-data-view [title]="'Total P&L'" [value]="'$' + (portfolio.totalPL | numberFormatter)" [valueColor]="'text-success-600'"></app-portfolio-meta-data-view>
   </div>
 }
 

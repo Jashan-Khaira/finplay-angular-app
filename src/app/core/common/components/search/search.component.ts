@@ -22,4 +22,7 @@ export class SearchComponent {
 
     this.search.emit(value);
   }
+
+  onSearch2(event: Event) {
+  }
 }
